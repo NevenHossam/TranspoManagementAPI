@@ -12,9 +12,7 @@ namespace TranspoManagementAPI.Services
         private readonly IRepository<Vehicle> _vehicleRepository;
         private readonly IFareCalcService _fareCalculator;
 
-        public TripService(
-            ITripRepository tripRepository,
-            IRepository<Vehicle> vehicleRepository,
+        public TripService(ITripRepository tripRepository, IRepository<Vehicle> vehicleRepository,
             IFareCalcService fareCalculator)
         {
             _tripRepository = tripRepository;

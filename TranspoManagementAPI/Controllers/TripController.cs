@@ -6,6 +6,9 @@ using TranspoManagementAPI.Models;
 [ApiController]
 [Route("api/[controller]")]
 public class TripController : ControllerBase
+    /// <summary>
+    /// Controller for managing trips.
+    /// </summary>
 {
     private readonly ITripService _tripService;
 
@@ -16,6 +19,10 @@ public class TripController : ControllerBase
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TripResponseDto>>> GetAll()
+    /// <summary>
+    /// Get all trips.
+    /// </summary>
+    /// <returns>List of TripResponseDto</returns>
     {
         var trips = await _tripService.GetAllAsync();
         return Ok(trips);
@@ -23,6 +30,11 @@ public class TripController : ControllerBase
 
     [HttpGet("{id}")]
     public async Task<ActionResult<TripResponseDto>> GetById(int id)
+    /// <summary>
+    /// Get a trip by its ID.
+    /// </summary>
+    /// <param name="id">Trip ID</param>
+    /// <returns>TripResponseDto</returns>
     {
         var trip = await _tripService.GetByIdAsync(id);
         if (trip == null)
@@ -32,6 +44,11 @@ public class TripController : ControllerBase
 
     [HttpPost]
     public async Task<ActionResult<TripResponseDto>> Create([FromBody] TripRequest request)
+    /// <summary>
+    /// Create a new trip.
+    /// </summary>
+    /// <param name="request">Trip creation request</param>
+    /// <returns>Created TripResponseDto</returns>
     {
         if (request.Distance <= 0)
             return BadRequest("Distance must be greater than 0.");

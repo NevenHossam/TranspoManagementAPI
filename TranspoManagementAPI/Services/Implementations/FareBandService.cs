@@ -3,9 +3,7 @@ using TranspoManagementAPI.DTO;
 using TranspoManagementAPI.Models;
 using TranspoManagementAPI.Repositories.Interfaces;
 using TranspoManagementAPI.Services.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace TranspoManagementAPI.Services.Implementations
 {
@@ -13,16 +11,25 @@ namespace TranspoManagementAPI.Services.Implementations
     {
         private readonly IFareBandRepository _repo;
         private readonly IMapper _mapper;
-        public FareBandService(IFareBandRepository repo, IMapper mapper)
+        private readonly IMemoryCache _cache;
+        private const string FareBandsCacheKey = "FareBands";
+
+        public FareBandService(IFareBandRepository repo, IMapper mapper, IMemoryCache cache)
         {
             _repo = repo;
             _mapper = mapper;
+            _cache = cache;
         }
 
         public async Task<IEnumerable<FareBandResponseDto>> GetAllOrderedAsync()
         {
-            var bands = await _repo.GetAllOrderedAsync();
-            return _mapper.Map<IEnumerable<FareBandResponseDto>>(bands);
+            if (!_cache.TryGetValue(FareBandsCacheKey, out IEnumerable<FareBandResponseDto>? cachedBands))
+            {
+                var bands = await _repo.GetAllOrderedAsync();
+                cachedBands = _mapper.Map<IEnumerable<FareBandResponseDto>>(bands);
+                _cache.Set(FareBandsCacheKey, cachedBands, TimeSpan.FromMinutes(10));
+            }
+            return cachedBands ?? Enumerable.Empty<FareBandResponseDto>();
         }
 
         public async Task<FareBandResponseDto?> GetByIdAsync(int id)
@@ -37,6 +44,7 @@ namespace TranspoManagementAPI.Services.Implementations
             var band = _mapper.Map<FareBand>(request);
             await _repo.AddAsync(band);
             await _repo.SaveChangesAsync();
+            _cache.Remove(FareBandsCacheKey); 
             return _mapper.Map<FareBandResponseDto>(band);
         }
 
@@ -48,6 +56,7 @@ namespace TranspoManagementAPI.Services.Implementations
             band.RatePerMile = request.RatePerMile;
             _repo.Update(band);
             await _repo.SaveChangesAsync();
+            _cache.Remove(FareBandsCacheKey); 
             return true;
         }
 
@@ -57,6 +66,7 @@ namespace TranspoManagementAPI.Services.Implementations
             if (band == null) return false;
             _repo.Delete(band);
             await _repo.SaveChangesAsync();
+            _cache.Remove(FareBandsCacheKey);
             return true;
         }
     }

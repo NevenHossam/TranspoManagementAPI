@@ -13,6 +13,8 @@ using FluentValidation.AspNetCore;
 using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
+// Register in-memory cache
+builder.Services.AddMemoryCache();
 // Register FluentValidation
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<TranspoManagementAPI.Validators.FareBandRequestDtoValidator>();

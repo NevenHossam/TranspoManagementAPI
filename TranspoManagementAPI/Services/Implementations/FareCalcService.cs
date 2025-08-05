@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
 using TranspoManagementAPI.IServices;
-using TranspoManagementAPI.Models;
 using TranspoManagementAPI.Services.Interfaces;
 
 namespace TranspoManagementAPI.Services

@@ -6,6 +6,9 @@ using TranspoManagementAPI.Models;
 [ApiController]
 [Route("api/[controller]")]
 public class VehicleController : ControllerBase
+    /// <summary>
+    /// Controller for managing vehicles.
+    /// </summary>
 {
     private readonly IVehicleService _vehicleService;
 
@@ -16,6 +19,10 @@ public class VehicleController : ControllerBase
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<VehicleResponseDto>>> GetAll()
+    /// <summary>
+    /// Get all vehicles.
+    /// </summary>
+    /// <returns>List of VehicleResponseDto</returns>
     {
         var vehicles = await _vehicleService.GetAllAsync();
         return Ok(vehicles);
@@ -23,6 +30,11 @@ public class VehicleController : ControllerBase
 
     [HttpGet("{id}")]
     public async Task<ActionResult<VehicleResponseDto>> GetById(int id)
+    /// <summary>
+    /// Get a vehicle by its ID.
+    /// </summary>
+    /// <param name="id">Vehicle ID</param>
+    /// <returns>VehicleResponseDto</returns>
     {
         var vehicle = await _vehicleService.GetByIdAsync(id);
         if (vehicle == null)
@@ -32,6 +44,11 @@ public class VehicleController : ControllerBase
 
     [HttpPost]
     public async Task<ActionResult<VehicleResponseDto>> Create([FromBody] VehicleRequest request)
+    /// <summary>
+    /// Create a new vehicle.
+    /// </summary>
+    /// <param name="request">Vehicle creation request</param>
+    /// <returns>Created VehicleResponseDto</returns>
     {
         var vehicle = await _vehicleService.CreateAsync(request);
         return CreatedAtAction(nameof(GetById), new { id = vehicle.Id }, vehicle);
