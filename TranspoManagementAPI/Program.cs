@@ -9,8 +9,13 @@ using TranspoManagementAPI.IServices;
 using TranspoManagementAPI.Repositories.Implementations;
 using TranspoManagementAPI.Services.Implementations;
 using TranspoManagementAPI.Services.Interfaces;
+using FluentValidation.AspNetCore;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
+// Register FluentValidation
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<TranspoManagementAPI.Validators.FareBandRequestDtoValidator>();
 
 // Configure SQLite
 builder.Services.AddDbContext<AppDbContext>(options =>

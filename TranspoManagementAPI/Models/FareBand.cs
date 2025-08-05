@@ -9,8 +9,6 @@ namespace TranspoManagementAPI.Models
 
         public double? DistanceLimit { get; set; }  // e.g., 1, 6, 16, or null for no limit
 
-        [Required]
-        [Range(0.01, double.MaxValue)]
         public double RatePerMile { get; set; }     // GBP per mile
     }
 }

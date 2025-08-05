@@ -9,10 +9,8 @@ namespace TranspoManagementAPI.Models
         [Key]
         public int Id { get; set; }
 
-        [Range(0.0, double.MaxValue)]
         public double Distance { get; set; }
 
-        [Required]
         public double TripTotalFare { get; set; }
 
         public DateTime TripDate { get; set; } = DateTime.UtcNow;
