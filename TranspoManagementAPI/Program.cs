@@ -52,6 +52,8 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddControllers();
 var app = builder.Build();
+// Use global exception handling middleware
+app.UseMiddleware<TranspoManagementAPI.Middleware.ExceptionHandlingMiddleware>();
 
 using (var scope = app.Services.CreateScope())
 {
