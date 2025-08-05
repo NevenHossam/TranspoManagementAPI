@@ -1,7 +1,6 @@
 ﻿using TranspoManagementAPI.DTO;
 using TranspoManagementAPI.IServices;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace TranspoManagementAPI.Controllers
 {
@@ -16,7 +15,7 @@ namespace TranspoManagementAPI.Controllers
             _fareCalculator = fareCalculator;
         }
         [HttpPost("calculate")]
-        public async Task<ActionResult> CalculateFare([FromBody] FareRequest request)
+        public async Task<ActionResult> CalculateFare([FromBody] FareCalcRequest request)
         {
             if (request == null || request.Distance < 0)
                 return BadRequest("Invalid distance input.");
