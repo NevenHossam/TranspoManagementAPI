@@ -1,0 +1,7 @@
+﻿@TranspoManagementAPI_HostAddress = http://localhost:5089
+
+GET {{TranspoManagementAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
