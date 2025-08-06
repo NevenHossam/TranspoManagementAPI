@@ -43,11 +43,11 @@ namespace TranspoManagementAPI.Services
                 Distance = request.Distance,
                 VehicleId = vehicle.Id,
                 TripTotalFare = fare,
-                TripDate = request.TripDate
+                TripDate = request.TripDate,
+                Vehicle = vehicle
             };
             await _tripRepository.AddAsync(trip);
             await _tripRepository.SaveChangesAsync();
-            trip.Vehicle = vehicle;
             return MapToDto(trip);
         }
 

@@ -19,6 +19,7 @@ namespace TranspoManagementAPI.Repositories
         public async Task<Trip?> GetWithVehicleByIdAsync(int id)
         {
             return await _context.Trips
+                .AsNoTracking()
                 .Include(t => t.Vehicle)
                 .FirstOrDefaultAsync(t => t.Id == id);
         }
