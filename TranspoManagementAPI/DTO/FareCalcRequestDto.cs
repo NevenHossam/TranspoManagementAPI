@@ -2,7 +2,7 @@
 
 namespace TranspoManagementAPI.DTO
 {
-    public class FareCalcRequest
+    public class FareCalcRequestDto
     {
         [Required(ErrorMessage = "Distance is required")]
         [Range(0.0, double.MaxValue, ErrorMessage = "Distance must be a non-negative value.")]

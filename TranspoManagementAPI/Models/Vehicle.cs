@@ -9,10 +9,10 @@ namespace TranspoManagementAPI.Models
         [Key]
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         public double FareMultiplier { get; set; } = 1.0;
 
-        public ICollection<Trip> Trips { get; set; }
+        public ICollection<Trip> Trips { get; set; } = new List<Trip>();
     }
 }

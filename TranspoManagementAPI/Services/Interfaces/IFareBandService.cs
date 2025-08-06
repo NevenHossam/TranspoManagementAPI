@@ -1,6 +1,4 @@
 using TranspoManagementAPI.DTO;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace TranspoManagementAPI.Services.Interfaces
 {

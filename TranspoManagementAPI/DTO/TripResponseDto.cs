@@ -1,5 +1,3 @@
-using System;
-
 namespace TranspoManagementAPI.DTO
 {
     public class TripResponseDto
@@ -9,6 +7,6 @@ namespace TranspoManagementAPI.DTO
         public double TripTotalFare { get; set; }
         public DateTime TripDate { get; set; }
         public int VehicleId { get; set; }
-        public string VehicleName { get; set; }
+        public string VehicleName { get; set; } = string.Empty;
     }
 }

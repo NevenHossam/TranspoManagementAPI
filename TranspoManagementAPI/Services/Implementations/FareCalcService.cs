@@ -1,9 +1,8 @@
-using TranspoManagementAPI.IServices;
 using TranspoManagementAPI.Services.Interfaces;
 
-namespace TranspoManagementAPI.Services
+namespace TranspoManagementAPI.Services.Implementations
 {
-public class FareCalcService : IFareCalcService
+    public class FareCalcService : IFareCalcService
     {
         private readonly IFareBandService _fareBands;
 
@@ -38,8 +37,6 @@ public class FareCalcService : IFareCalcService
 
             return fare * multiplier;
         }
-
-
     }
 }
 

@@ -1,6 +1,6 @@
 ﻿namespace TranspoManagementAPI.DTO
 {
-    public class TripRequest
+    public class TripRequestDto
     {
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Distance is required")]
         [System.ComponentModel.DataAnnotations.Range(0.1, double.MaxValue, ErrorMessage = "Distance must be positive")]

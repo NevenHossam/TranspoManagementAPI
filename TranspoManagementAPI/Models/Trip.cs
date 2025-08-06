@@ -18,6 +18,6 @@ namespace TranspoManagementAPI.Models
         [ForeignKey("Vehicle")]
         public int VehicleId { get; set; }
 
-        public Vehicle Vehicle { get; set; }
+        public Vehicle Vehicle { get; set; } = new Vehicle();
     }
 }

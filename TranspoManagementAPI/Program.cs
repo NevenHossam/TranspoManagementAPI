@@ -5,7 +5,6 @@ using TranspoManagementAPI.Data;
 using TranspoManagementAPI.Repositories.Interfaces;
 using TranspoManagementAPI.Repositories;
 using TranspoManagementAPI.Services;
-using TranspoManagementAPI.IServices;
 using TranspoManagementAPI.Repositories.Implementations;
 using TranspoManagementAPI.Services.Implementations;
 using TranspoManagementAPI.Services.Interfaces;

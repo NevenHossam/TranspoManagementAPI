@@ -2,17 +2,16 @@
 using TranspoManagementAPI.Repositories.Interfaces;
 using TranspoManagementAPI.Services.Interfaces;
 using TranspoManagementAPI.Models;
-using TranspoManagementAPI.IServices;
 
 namespace TranspoManagementAPI.Services
 {
     public class TripService : ITripService
     {
         private readonly ITripRepository _tripRepository;
-        private readonly IRepository<Vehicle> _vehicleRepository;
+        private readonly IVehicleRepository _vehicleRepository;
         private readonly IFareCalcService _fareCalculator;
 
-        public TripService(ITripRepository tripRepository, IRepository<Vehicle> vehicleRepository,
+        public TripService(ITripRepository tripRepository, IVehicleRepository vehicleRepository,
             IFareCalcService fareCalculator)
         {
             _tripRepository = tripRepository;
@@ -33,7 +32,7 @@ namespace TranspoManagementAPI.Services
             return MapToDto(trip);
         }
 
-        public async Task<TripResponseDto> CreateAsync(TripRequest request)
+        public async Task<TripResponseDto> CreateAsync(TripRequestDto request)
         {
             var vehicle = await _vehicleRepository.GetByIdAsync(request.VehicleId);
             if (vehicle == null)
@@ -52,7 +51,7 @@ namespace TranspoManagementAPI.Services
             return MapToDto(trip);
         }
 
-        public async Task<bool> UpdateAsync(int id, TripRequest request)
+        public async Task<bool> UpdateAsync(int id, TripRequestDto request)
         {
             var trip = await _tripRepository.GetByIdAsync(id);
             if (trip == null)
@@ -102,7 +101,7 @@ namespace TranspoManagementAPI.Services
                 TripTotalFare = trip.TripTotalFare,
                 TripDate = trip.TripDate,
                 VehicleId = trip.VehicleId,
-                VehicleName = trip.Vehicle?.Name
+                VehicleName = trip.Vehicle?.Name ?? string.Empty
             };
         }
     }

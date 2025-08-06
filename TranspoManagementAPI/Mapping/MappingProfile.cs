@@ -8,12 +8,13 @@ namespace TranspoManagementAPI.Mapping
     {
         public MappingProfile()
         {
+            CreateMap<VehicleRequestDto, Vehicle>();
             CreateMap<Vehicle, VehicleResponseDto>();
-            CreateMap<VehicleRequest, Vehicle>();
+            CreateMap<TripRequestDto, Trip>();
             CreateMap<Trip, TripResponseDto>()
                 .ForMember(dest => dest.VehicleName, opt => opt.MapFrom(src => src.Vehicle != null ? src.Vehicle.Name : null));
-            CreateMap<FareBand, FareBandResponseDto>();
             CreateMap<FareBandRequestDto, FareBand>();
+            CreateMap<FareBand, FareBandResponseDto>();
         }
     }
 }

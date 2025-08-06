@@ -30,7 +30,7 @@ namespace TranspoManagementAPI.Services
             return _mapper.Map<VehicleResponseDto>(v);
         }
 
-        public async Task<VehicleResponseDto> CreateAsync(VehicleRequest request)
+        public async Task<VehicleResponseDto> CreateAsync(VehicleRequestDto request)
         {
             var vehicle = _mapper.Map<Vehicle>(request);
             await _vehicleRepository.AddAsync(vehicle);
@@ -38,7 +38,7 @@ namespace TranspoManagementAPI.Services
             return _mapper.Map<VehicleResponseDto>(vehicle);
         }
 
-        public async Task<bool> UpdateAsync(int id, VehicleRequest request)
+        public async Task<bool> UpdateAsync(int id, VehicleRequestDto request)
         {
             var vehicle = await _vehicleRepository.GetByIdAsync(id);
             if (vehicle == null)

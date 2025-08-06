@@ -1,8 +1,8 @@
-namespace TranspoManagementAPI.IServices
+namespace TranspoManagementAPI.Services.Interfaces
 {
-public interface IFareCalcService
+    public interface IFareCalcService
     {
-    Task<double> CalculateFare(double distance, double multiplier = 1.0);
+        Task<double> CalculateFare(double distance, double multiplier = 1.0);
     }
 }
 
