@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TranspoManagementAPI.DTO;
 using TranspoManagementAPI.Services.Interfaces;
-using TranspoManagementAPI.Models;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -56,6 +55,11 @@ public class VehicleController : ControllerBase
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] VehicleRequest request)
+    /// <summary>
+    /// Update a specific vehicle.
+    /// </summary>
+    /// <param name="request">Vehicle request</param>
+    /// <returns>No content if successful</returns>
     {
         var success = await _vehicleService.UpdateAsync(id, request);
         if (!success)
@@ -65,6 +69,11 @@ public class VehicleController : ControllerBase
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
+    /// <summary>
+    /// Delete a specific vehicle.
+    /// </summary>
+    /// <param name="request">Vehicle ID</param>
+    /// <returns>No content if successful</returns>
     {
         var success = await _vehicleService.DeleteAsync(id);
         if (!success)

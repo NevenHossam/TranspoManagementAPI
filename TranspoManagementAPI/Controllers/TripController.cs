@@ -58,6 +58,11 @@ public class TripController : ControllerBase
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] TripRequest request)
+    /// <summary>
+    /// Update a specific trip.
+    /// </summary>
+    /// <param name="request">Trip request</param>
+    /// <returns>No content if successful</returns>
     {
         var success = await _tripService.UpdateAsync(id, request);
         if (!success)
@@ -67,6 +72,11 @@ public class TripController : ControllerBase
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
+    /// <summary>
+    /// Delete a specific trip.
+    /// </summary>
+    /// <param name="request">Trip ID</param>
+    /// <returns>No content if successful</returns>
     {
         var success = await _tripService.DeleteAsync(id);
         if (!success)
@@ -76,6 +86,11 @@ public class TripController : ControllerBase
 
     [HttpGet("vehicle/{vehicleId}")]
     public async Task<ActionResult<IEnumerable<TripResponseDto>>> GetTripsByVehicle(int vehicleId)
+    /// <summary>
+    /// Get all trips of a specific vehicle.
+    /// </summary>
+    /// <param name="request">Vehicle ID</param>
+    /// <returns>List of TripResponseDto</returns>
     {
         var trips = await _tripService.GetTripsByVehicleAsync(vehicleId);
         return Ok(trips);
@@ -83,6 +98,11 @@ public class TripController : ControllerBase
 
     [HttpGet("vehicle/{vehicleId}/trip/{tripId}")]
     public async Task<ActionResult<TripResponseDto>> GetTripByVehicle(int vehicleId, int tripId)
+    /// <summary>
+    /// Get a trip by trip ID and vehicle ID.
+    /// </summary>
+    /// <param name="request">Vehicle ID</param>
+    /// <returns>TripResponseDto</returns>
     {
         var trip = await _tripService.GetTripByVehicleAsync(vehicleId, tripId);
         if (trip == null)

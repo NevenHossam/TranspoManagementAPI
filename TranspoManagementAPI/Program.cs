@@ -13,8 +13,10 @@ using FluentValidation.AspNetCore;
 using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
+
 // Register in-memory cache
 builder.Services.AddMemoryCache();
+
 // Register FluentValidation
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<TranspoManagementAPI.Validators.FareBandRequestDtoValidator>();
@@ -25,6 +27,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Register AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 // Register services
 builder.Services.AddScoped<IFareBandRepository, FareBandRepository>();
 builder.Services.AddScoped<IFareBandService, FareBandService>();
@@ -47,11 +50,6 @@ builder.Services.AddSwaggerGen(options =>
         Title = "Transpo Management API",
         Version = "v1",
         Description = "API for managing transportation fares, vehicles, and trips.",
-        Contact = new Microsoft.OpenApi.Models.OpenApiContact
-        {
-            Name = "Your Name",
-            Email = "your.email@example.com"
-        }
     });
 
 
@@ -59,6 +57,7 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddControllers();
 var app = builder.Build();
+
 // Use global exception handling middleware
 app.UseMiddleware<TranspoManagementAPI.Middleware.ExceptionHandlingMiddleware>();
 
