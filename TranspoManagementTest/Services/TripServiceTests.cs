@@ -75,7 +75,7 @@ namespace TranspoManagementAPI.Tests.Services
         [Fact]
         public async Task GetByIdAsync_ReturnsNull_WhenTripNotFound()
         {
-            _tripRepoMock.Setup(repo => repo.GetWithVehicleByIdAsync(99)).ReturnsAsync((Trip)null);
+            _tripRepoMock.Setup(repo => repo.GetWithVehicleByIdAsync(99)).ReturnsAsync((Trip?)null);
 
             var result = await _tripService.GetByIdAsync(99);
 
@@ -86,7 +86,7 @@ namespace TranspoManagementAPI.Tests.Services
         public async Task CreateAsync_ThrowsException_WhenVehicleNotFound()
         {
             var request = new TripRequestDto { VehicleId = 999 };
-            _vehicleRepoMock.Setup(r => r.GetByIdAsync(request.VehicleId)).ReturnsAsync((Vehicle)null);
+            _vehicleRepoMock.Setup(r => r.GetByIdAsync(request.VehicleId)).ReturnsAsync((Vehicle?)null);
 
             await Assert.ThrowsAsync<Exception>(() => _tripService.CreateAsync(request));
         }
@@ -117,7 +117,7 @@ namespace TranspoManagementAPI.Tests.Services
         [Fact]
         public async Task UpdateAsync_ReturnsFalse_WhenTripNotFound()
         {
-            _tripRepoMock.Setup(r => r.GetByIdAsync(1)).ReturnsAsync((Trip)null);
+            _tripRepoMock.Setup(r => r.GetByIdAsync(1)).ReturnsAsync((Trip?)null);
 
             var result = await _tripService.UpdateAsync(1, new TripRequestDto());
 
@@ -129,7 +129,7 @@ namespace TranspoManagementAPI.Tests.Services
         {
             var trip = new Trip { Id = 1, VehicleId = 1 };
             _tripRepoMock.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(trip);
-            _vehicleRepoMock.Setup(r => r.GetByIdAsync(It.IsAny<int>())).ReturnsAsync((Vehicle)null);
+            _vehicleRepoMock.Setup(r => r.GetByIdAsync(It.IsAny<int>())).ReturnsAsync((Vehicle?)null);
 
             var result = await _tripService.UpdateAsync(1, new TripRequestDto());
 
@@ -139,7 +139,7 @@ namespace TranspoManagementAPI.Tests.Services
         [Fact]
         public async Task DeleteAsync_ReturnsFalse_WhenTripNotFound()
         {
-            _tripRepoMock.Setup(r => r.GetByIdAsync(1)).ReturnsAsync((Trip)null);
+            _tripRepoMock.Setup(r => r.GetByIdAsync(1)).ReturnsAsync((Trip?)null);
 
             var result = await _tripService.DeleteAsync(1);
 
