@@ -1,5 +1,4 @@
-﻿
-using TranspoManagementAPI.Mapping;
+﻿using TranspoManagementAPI.Mapping;
 using Microsoft.EntityFrameworkCore;
 using TranspoManagementAPI.Data;
 using TranspoManagementAPI.Repositories.Interfaces;
@@ -10,6 +9,7 @@ using TranspoManagementAPI.Services.Implementations;
 using TranspoManagementAPI.Services.Interfaces;
 using FluentValidation.AspNetCore;
 using FluentValidation;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,20 +50,52 @@ builder.Services.AddSwaggerGen(options =>
         Version = "v1",
         Description = "API for managing transportation fares, vehicles, and trips.",
     });
+});
 
+// Rate Limiter with header-based partitioning for test clients
+builder.Services.AddRateLimiter(options =>
+{
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+    {
+        var clientId = httpContext.Request.Headers["X-Test-Client"].ToString();
+        if (!string.IsNullOrEmpty(clientId))
+        {
+            return RateLimitPartition.GetFixedWindowLimiter(
+                partitionKey: clientId,
+                factory: _ => new FixedWindowRateLimiterOptions
+                {
+                    PermitLimit = 10,
+                    Window = TimeSpan.FromSeconds(60),
+                    QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                    QueueLimit = 0
+                });
+        }
 
+        return RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            factory: _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 10,
+                Window = TimeSpan.FromSeconds(60),
+                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                QueueLimit = 0
+            });
+    });
+
+    options.RejectionStatusCode = 429;
 });
 
 builder.Services.AddControllers();
+
 var app = builder.Build();
 
-// Use global exception handling middleware
+app.UseRateLimiter();
 app.UseMiddleware<TranspoManagementAPI.Middleware.ExceptionHandlingMiddleware>();
 
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.EnsureCreated(); // creates and seeds DB on first run
+    db.Database.EnsureCreated();
 }
 
 app.UseSwagger();
@@ -72,3 +104,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
+
+// for WebApplicationFactory in Rate limiter cases
+public partial class Program { }
