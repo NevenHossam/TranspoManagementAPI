@@ -13,6 +13,10 @@ using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure the port based on environment variable (for Render deployment)
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+builder.WebHost.UseUrls($"http://*:{port}");
+
 // Register in-memory cache
 builder.Services.AddMemoryCache();
 
@@ -100,9 +104,18 @@ using (var scope = app.Services.CreateScope())
 
 app.UseSwagger();
 app.UseSwaggerUI();
-app.UseHttpsRedirection();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
+
 app.UseAuthorization();
 app.MapControllers();
+
+// Add health check endpoint for Render
+app.MapGet("/health", () => "Healthy!");
+
 app.Run();
 
 // for WebApplicationFactory in Rate limiter cases
