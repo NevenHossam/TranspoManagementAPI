@@ -14,7 +14,7 @@ A .NET 8 Web API for managing transportation fares, vehicles, and trips. Built w
 - In-Memory Caching: Implemented for frequently accessed data (e.g., fare bands)
 - Exception Handling: Global middleware for consistent error responses
 - Input Validation: with Data Annotations and FluentValidation to ensure data integrity
-- 
+  
 ## Technical Features
 - Clean Architecture: Well-organized repository pattern with separation of concerns (Controllers, Services, Repositories)
 - Entity Framework Core: SQLite database integration with EF Core ORM
@@ -24,6 +24,7 @@ A .NET 8 Web API for managing transportation fares, vehicles, and trips. Built w
 - API Documentation: Swagger/OpenAPI integration for interactive API documentation and testing
 - Validation: Request validation using FluentValidation library
 - DTO Pattern: Consistent use of Data Transfer Objects for API requests and responses
+- Unit Testing: xUnit tests with Moq for ensuring reliability through automated regression testing
 
 ## DevOps & Deployment
 - Docker Support: Complete containerization with Docker
@@ -119,6 +120,7 @@ A .NET 8 Web API for managing transportation fares, vehicles, and trips. Built w
 - **Repository Pattern**: Generic implementation for data access abstraction
 - **CI/CD Pipeline**: Continuous integration and delivery using GitHub Actions
 - **Containerization**: Docker support for consistent deployment environments
+- **Unit Testing**: xUnit tests with Moq for comprehensive service, repository and controller testing, ensuring reliability through automated regression testing
 
 ## Authors
 - Neven Hossam
