@@ -42,7 +42,7 @@ namespace TranspoManagementAPI.Tests.Services
             var bands = new List<FareBand> { new FareBand { DistanceLimit = 15, RatePerMile = 3.0 } };
             var dtos = new List<FareBandResponseDto> { new FareBandResponseDto { DistanceLimit = 15, RatePerMile = 3.0 } };
 
-            _mockRepo.Setup(r => r.GetAllOrderedAsync()).ReturnsAsync(bands);
+            _mockRepo.Setup(r => r.GetAllOrderdByDistanceAsync()).ReturnsAsync(bands);
             _mockMapper.Setup(m => m.Map<IEnumerable<FareBandResponseDto>>(bands)).Returns(dtos);
 
             var result = await _service.GetAllOrderedAsync();
