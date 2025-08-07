@@ -14,7 +14,7 @@ using System.Threading.RateLimiting;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure the port based on environment variable (for Render deployment)
-var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5090";
 builder.WebHost.UseUrls($"http://*:{port}");
 
 // Register in-memory cache

@@ -13,7 +13,7 @@ namespace TranspoManagementAPI.Repositories.Implementations
             _context = context;
         }
 
-        public async Task<IEnumerable<FareBand>> GetAllOrderedAsync()
+        public async Task<IEnumerable<FareBand>> GetAllAsync()
         {
             return await _context.FareBands
                 .OrderBy(b => b.DistanceLimit ?? double.MaxValue)

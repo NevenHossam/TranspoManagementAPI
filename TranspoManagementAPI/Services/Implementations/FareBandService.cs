@@ -25,7 +25,7 @@ namespace TranspoManagementAPI.Services.Implementations
         {
             if (!_cache.TryGetValue(FareBandsCacheKey, out IEnumerable<FareBandResponseDto>? cachedBands))
             {
-                var bands = await _repo.GetAllOrderedAsync();
+                var bands = await _repo.GetAllAsync();
                 cachedBands = _mapper.Map<IEnumerable<FareBandResponseDto>>(bands);
                 _cache.Set(FareBandsCacheKey, cachedBands, TimeSpan.FromMinutes(10));
             }
